@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversation with Shiru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: rgb(0, 0, 0);
+            background: #CCCCFF;
+        }
+        #chat-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 80%; /* Set width for desktop */
+            margin: 0 auto;
+            border-radius: 5px;
+            background-color: rgb(129, 138, 168);
+            overflow-y: scroll;
+            height: 300px; /* Set height for desktop */
+        }
+        .user-message {
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        .shiru-message {
+            text-align: left;
+            margin-bottom: 5px;
+        }
+
+        /* Media query for mobile responsiveness */
+        @media (max-width: 768px) {
+            #chat-container {
+                width: 90%; /* Adjust width for mobile */
+                height: 200px; /* Adjust height for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+
+    <script>
+        const NAME = "Shiru";
+
+        function delay(milliseconds) {
+            return new Promise(resolve => setTimeout(resolve, milliseconds));
+        }
+
+        async function slowPrint(message, className) {
+            const chatContainer = document.getElementById('chat-container');
+            const div = document.createElement('div');
+            div.className = className;
+            div.textContent = `${NAME}: `;
+            chatContainer.appendChild(div);
+
+            for (const ch of message) {
+                div.textContent += ch;
+                await delay(50);
+            }
+
+            const br = document.createElement('br');
+            chatContainer.appendChild(br);
+        }
+
+        async function main() {
+            const ror = prompt("Let me know your name first or what should I call you");
+            await slowPrint(`Ohh hello ${ror}!`, 'shiru-message');
+            await delay(2000);
+
+            const rer = prompt(`How are you these past few days, ${ror}? Fine or not so good?`);
+
+            if (rer.toLowerCase() === "fine" || rer.toLowerCase() === "i'm fine" || rer.toLowerCase() === "im fine") {
+                await slowPrint(`That's good to hear, ${ror}!`, 'shiru-message');
+                await slowPrint("May your good days continue to sparkle with happiness. :)", 'shiru-message');
+            } else if (rer.toLowerCase() === "not so good" || rer.toLowerCase() === "nah" || rer.toLowerCase() === "nahh") {
+                await slowPrint("Thanks for letting me know.", 'shiru-message');
+                await delay(1500);
+                const rar = prompt(`Why aren't you feeling fine, ${ror}?`);
+                await slowPrint(`Okay ${ror}, So, whatever you feel right now, remember, it's only a chapter in your story.`, 'shiru-message');
+                await delay(3000);
+                await slowPrint("Everything will be fine someday. Keep your head high, your heart strong, and", 'shiru-message');
+                await slowPrint("trust that the universe is aligning everything for your greater good!", 'shiru-message');
+                await slowPrint("Just trust the process,", 'shiru-message');
+                await slowPrint("and if you ever feel that you don't have anyone to talk to about your problems,", 'shiru-message');
+                await delay(1500);
+                await slowPrint("I'm always here to listen. :) ", 'shiru-message');
+                await delay(3500);
+            } else {
+                await slowPrint("Sorry, I couldn't understand your input.", 'shiru-message');
+            }
+        }
+
+        main().catch(console.error);
+    </script>
+</body>
+</html>
